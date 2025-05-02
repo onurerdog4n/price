@@ -1,0 +1,252 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(0, 0, 0, 0.87);
+  background-color: #f3f4f6;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+/* Fixed container styling */
+.container {
+  width: 100%;
+  min-width: 320px; /* Reduced from 1000px for mobile */
+}
+
+/* Ensure scrollable container keeps fixed width items */
+#stores-scroll-container {
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f8fafc;
+  min-width: 320px; /* Reduced from 600px for mobile */
+}
+
+#scrollable-header > div,
+#scrollable-products-container > div > div {
+  flex-shrink: 0; /* Prevent store boxes from shrinking */
+  min-width: 230px; /* Match the width of the store boxes */
+  width: 230px; /* Fixed width */
+}
+
+#stores-scroll-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+#stores-scroll-container::-webkit-scrollbar-track {
+  background: #f8fafc;
+  border-radius: 4px;
+}
+
+#stores-scroll-container::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 4px;
+}
+
+#fixed-header,
+#scrollable-header {
+  min-width: max-content;
+  padding-bottom: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+#scrollable-header {
+  white-space: nowrap; /* Prevent wrapping */
+}
+
+/* Add draggable styling to store headers */
+.store-header {
+  cursor: grab;
+  user-select: none;
+  position: relative;
+  transition: transform 0.2s ease;
+}
+
+.store-header:hover::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(59, 130, 246, 0.05);
+  border-radius: 0.5rem;
+  pointer-events: none;
+}
+
+.store-header.dragging {
+  cursor: grabbing;
+  transform: scale(1.02);
+  z-index: 100;
+  opacity: 0.9;
+}
+
+.drag-handle {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  color: #9ca3af;
+  font-size: 10px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.store-header:hover .drag-handle {
+  opacity: 1;
+}
+
+.sortable-ghost {
+  opacity: 0.4;
+}
+
+.sortable-chosen {
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+.sortable-drag {
+  opacity: 0.9;
+}
+
+#fixed-products-container,
+#scrollable-products-container {
+  background-color: #f3f4f6;
+}
+
+.product-row {
+  height: 100%;
+}
+
+/* Ensure both sides align perfectly */
+#fixed-products-container > div,
+#scrollable-products-container > div {
+  margin-bottom: 0.25rem;
+  height: 128px; /* Fixed height to ensure alignment */
+}
+
+.date-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #3b82f6;
+  margin-right: 4px;
+}
+
+.trend-chart {
+  height: 30px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Infinite scrolling styles */
+#infinite-scroll-sentinel {
+  width: 100%;
+  height: 10px;
+  clear: both;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .container {
+    padding: 2px;
+  }
+  
+  #fixed-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  #fixed-header > div {
+    margin-bottom: 4px;
+    width: 100%;
+    max-width: 100%;
+    justify-content: flex-start;
+  }
+  
+  #fixed-products-container > div {
+    flex-direction: column;
+    height: auto;
+    margin-bottom: 8px;
+  }
+  
+  #fixed-products-container > div > div {
+    width: 100%;
+    max-width: 100%;
+    margin-right: 0;
+    margin-bottom: 4px;
+  }
+  
+  .store-box {
+    margin-bottom: 4px;
+  }
+  
+  /* Adjust product info box for mobile */
+  #fixed-products-container .w-[300px] {
+    width: 100%;
+    min-width: 100%;
+  }
+  
+  /* Adjust SKU lowest box for mobile */
+  #fixed-products-container .w-[230px] {
+    width: 100%;
+    min-width: 100%;
+  }
+  
+  /* Make store boxes more visible on mobile */
+  #scrollable-products-container > div > div {
+    margin-bottom: 8px;
+  }
+}
+
+/* Tablet responsive styles */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .container {
+    padding: 8px;
+  }
+  
+  #fixed-header > div,
+  #scrollable-header > div {
+    min-width: 200px;
+    width: 200px;
+  }
+  
+  #fixed-products-container .w-[300px] {
+    width: 250px;
+    min-width: 250px;
+  }
+  
+  #fixed-products-container .w-[230px],
+  #scrollable-products-container .w-[230px] {
+    width: 200px;
+    min-width: 200px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #242424;
+  }
+  #stores-scroll-container {
+    scrollbar-color: #4b5563 #1f2937;
+  }
+  #stores-scroll-container::-webkit-scrollbar-track {
+    background: #1f2937;
+  }
+  #stores-scroll-container::-webkit-scrollbar-thumb {
+    background-color: #4b5563;
+  }
+}
